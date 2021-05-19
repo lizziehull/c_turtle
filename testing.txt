@@ -1,0 +1,8 @@
+************
+* TESTING  *
+************
+
+Initially when thinking about the testing, I could not see a way to thoroughly test the program apart from generating hundreds of test files with various errors and combinations of parts of the grammar. I then looked into CUnit, but I decided that it didn't give me much added functionality and would take too long to install and learn how to use. However, I thought more about unit testing, and I realised that I could test each function separately, starting with the ones that do not call any other function and then moving on to the ones that do. Crucially, I realised that if function A calls function B as part of its implementation and function B has already been tested, I do not need to test function B again. This meant that the testing was shorter than I first anticipated, although it still took a considerable amount of time to implement, and I ended up not having the time to test the Polish notation function in my interpreter, or any of the new functions that I added in my extension.
+
+I tested my functions by asserts where possible. To check that my program was outputting the correct error message, I created a function that, when the testing mode is switched on, writes the error message to part of the structure and then compares it with the expected string in the test function. I also created a function for checking whether doubles are identical within a set buffer (say 0.0001) because of rounding errors.
+

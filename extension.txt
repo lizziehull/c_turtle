@@ -1,0 +1,35 @@
+**************
+* EXTENSION  *
+**************
+
+1. FORMAL GRAMMAR
+______________
+
+
+<MAIN> ::= "{" <INSTRCTLST><INSTRCTLST> ::= <INSTRUCTION><INSTRCTLST> | "}"<INSTRUCTION> ::= <FD> | <LT> | <RT> | <DO> | <SET> | <COLOUR> | <PENUP> | <PENDOWN> | <DASH> | <IF>
+<COLOUR> ::= "COLOUR" "white" | "COLOUR" "red" | "COLOUR" "green" | "COLOUR" "blue" | "COLOUR" "random" 
+<PENUP> ::= "PENUP"
+<PENDOWN> ::= "PENDOWN"
+<DASH> ::= "DASH" <VARNUM>
+<FD> ::= "FD" <VARNUM><LT> ::= "LT" <VARNUM><RT> ::= "RT" <VARNUM>
+<IF> ::= "IF" <VARNUM> <COND> <VARNUM> "{" <INSTRCTLST><DO> ::= "DO" <VAR> "FROM" <VARNUM> "TO" <VARNUM> "{" <INSTRCTLST><VAR> ::= [A-Z]<VARNUM> ::= number | <VAR><SET> ::= "SET" <VAR> ":=" <POLISH><POLISH> ::= <OP> <POLISH> | <VARNUM> <POLISH> | ";"<OP> ::= "+" | "-" | "*" | "/" | "%"
+<COND> ::= ">" | ">=" | "<" | "<=" | "==" | "!="
+
+
+2. COMMENTS
+______________
+
+The things I have added are as follows.
+
+1. I added a modulus operation (unlike the other operands, the operands for a modulus must be integers). This is best demonstrated in combination with changing colours or hashed lines.
+2. I added the ability to set the colour of a line. This needs to be done before a <FD> to have effect. The line colour is white by default and can be set to white, red, green, blue or random. By nesting do loops, you can produce shapes that have different colours for the internal parts. N.B. I originally planned to allow the user to input a hex colour code and split it into separate red, green and blue values, but I was unable to find a simple method for splitting strings without delimiters.
+3. I added a SCALE #define to scale up the size of the program on the screen (by scaling all <FD> instruction by the factor defined). Note that most of these screenshots are at 2, but there is one at 1 and one at 3 for comparison.
+4. I added pen up and pen down - pen up adjusts the x and y coordinates identically but doesn't print anything to the screen. Pen down returns to the normal drawing mode. The default is pen down.
+5. I added dashed lines (by effectively implementing a similar method to 'pen up' and 'pen down' but breaking the length of FD into the length of the dash). The higher the number, the more space there is in between the dashes.
+6. I added a conditional which takes varnums as arguments on both sides and a conditional operator in between. I initially wanted to make it so the arguments could be either Polish notation or varnums, but due to the exit conditions in both functions it was not possible to combine the two in the time I had. Additionally, I realised that you could always use a <SET> before the conditional if you really wanted to use Polish notation.
+
+Things I would have done, if I had had more time:
+- Variables with more than one letter (conforming to the C standards for valid variables).
+- Adding ELSE to the conditional. At the moment you have to manually type in the two opposing conditions.
+- Passing in some of what are currently #defines (SCALE, TESTING etc.) as arguments to the program.
+- A choice to use radians instead of degrees.
